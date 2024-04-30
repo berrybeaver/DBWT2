@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+    <script>
+        'use strict';
+        function mul(x,y){
+            return x*y;
+        }
+        function exec_mul(fn, x, y){
+            return mul(x,y);
+        }
+        let result = exec_mul(mul, 2, 4);
+        console.log('ergebnis= ', result);
+    </script>
+</body>
+</html>

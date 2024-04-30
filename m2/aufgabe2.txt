@@ -1,0 +1,12 @@
+1. Code Inspections and Intentions: PHPStorm comes with built-in code inspections that help you identify and fix issues in your code.
+It also provides code intentions that offer quick-fix suggestions for common coding problems.
+
+2. Version Control Integration: PHPStorm has seamless integration with version control systems like Git,
+allowing you to perform version control operations directly within the IDE.
+
+3. Customization and Plugins: PHPStorm is highly customizable, allowing you to tailor the IDE to your preferences.
+Additionally, it supports a wide range of plugins that extend its functionality for specific use cases and technologies.
+
+4. Database Tools: PHPStorm provides robust database tools that allow you to interact with databases directly from the IDE.
+You can run queries, browse database structures, and manage data without leaving PHPStorm.
+
