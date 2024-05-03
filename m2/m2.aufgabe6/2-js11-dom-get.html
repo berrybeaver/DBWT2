@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+  <title>DOM Manipulation Example</title>
+</head>
+<body>
+    <div id="exampleDiv">
+        Initial Heading
+    </div>
+    <script>
+        'use strict';
+        //get the element by ID then change its inner HTMl
+        let exampleElement = document.getElementById('exampleDiv');
+        exampleElement.innerHTML = '<b>Modified HTML</b>';
+
+        //inner Text
+        let exampleElement2 = document.getElementById('exampleDiv');
+        exampleElement2.innerText = 'Modified Text';
+    </script>
+
+</body>
+</html>

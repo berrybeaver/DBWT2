@@ -1,11 +1,25 @@
-<form METHOD="get" action="{{ url('/articles') }}">
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abalo Articles</title>
+    <script src="{{ asset('js/cookiecheck.js') }}"></script>
+    <style>
+        /* CSS for styling the menu */
+    </style>
+</head>
+<body>
+    <form METHOD="get" action="{{ url('/articles') }}">
     <label for="search">Search: </label>
     <input type="text" id="search" name="search" value="{{ request('search') }}">
     <input type="submit" value="Search">
 
 </form>
-
-<table>
+    <a href="/newarticle">
+        <button>Add new article</button>
+    </a>
+    <table>
     <th >Article</th>
     <th >Description</th>
     <th >Price</th>
@@ -21,3 +35,5 @@
         </tr>
     @endforeach
 </table>
+</body>
+</html>
