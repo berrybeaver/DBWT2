@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+    <script>
+        'use strict'
+        let userAgent = window.navigator.userAgent;
+
+        let browserNames = ['Firefox', 'Chrome', 'Safari', 'Edge', 'Internet Explorer'];
+        let browserName = 'Unknown';
+        for (let name of browserNames){
+            if (userAgent.includes(name)){
+                browserName = name;
+                break;
+            }
+        }
+
+        console.log('Browser Name: ', browserName);
+    </script>
+</body>
+</html>
