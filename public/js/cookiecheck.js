@@ -4,7 +4,7 @@ if (document.cookie.indexOf('cookieAgreed=true') === -1) {
     if (confirm('Do you agree to the use of cookies?')) {
         // If the user agrees, set a cookie to remember the consent
         let expiryDate = new Date();
-        expiryDate.setFullYear(expiryDate.getDate() + 1); // Expire cookie in 1 day
+        expiryDate.setMinutes(expiryDate.getMinutes() + 5); // Expire cookie in 5min
         document.cookie = 'cookieAgreed=true; expires=' + expiryDate.toUTCString() + '; path=/';
     }
 }

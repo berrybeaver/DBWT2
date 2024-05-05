@@ -169,4 +169,5 @@
             </div>
         </div>
     </body>
+    <script src="{{ asset('js/cookiecheck.js') }}"></script>
 </html>
