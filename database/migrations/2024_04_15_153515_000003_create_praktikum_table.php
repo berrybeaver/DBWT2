@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('ab_mail', 200)->nullable(false)->unique();
         });
         Schema::create('ab_article', function (Blueprint $table) {
-            $table->BigInteger('id')->unsigned()->primary();
+            $table->BigIncrements('id')->unsigned()->primary();
             $table->string('ab_name', 80)->nullable(false);
             $table->integer('ab_price')->nullable(false);
             $table->string('ab_description', 1000)->nullable(false);

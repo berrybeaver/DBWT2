@@ -11,7 +11,10 @@ Route::get('/', function () {
 });
 
 Route::get('/home', [\App\Http\Controllers\NavigationController::class, 'showMenu']);
-Route::get('/newarticle', [\App\Http\Controllers\ArticleController::class, 'newarticle']);
+Route::get('/newarticle/', function (){
+    return view('articles.addnew');
+});
 Route::get('/articles/', [App\Http\Controllers\ArticleController::class, 'index']);
 Route::get('/articles/{search}', [App\Http\Controllers\ArticleController::class, 'index'])->name('articles.search');
+Route::post('/articles/', [\App\Http\Controllers\ArticleController::class, 'store']);
 
