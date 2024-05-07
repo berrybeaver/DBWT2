@@ -8,7 +8,7 @@ window.onload = function() {
 }
 
 function addProduct(article){
-
+    //if item not in basket yet
     if(!items.find(item => item.id === article.id) ){
         items.push(article);
         console.log(items);
@@ -50,12 +50,11 @@ function showItems() {
     for (let i = 0; i < items.length; i++) {
         // Create a new row and cells
         let row = document.createElement('tr');
-        row.style = 'border-bottom: dashed 1px grey; padding: 10px;';
+        //row.style = 'border-bottom: dashed 1px grey; padding: 10px;';
 
         let cell = document.createElement('td');
-        cell.style = 'background-color: darkgrey; font-color:black;';
-        //  cell.classList.add('dark:text-gray-600');
-        cell.classList.add('text-black');
+        cell.style = 'background-color: lightgrey; font-color:black;';
+        //cell.classList.add('text-black');
 
         let cell3 = document.createElement('td');
         cell3.style = 'background-color: lightgrey;';

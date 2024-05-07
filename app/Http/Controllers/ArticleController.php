@@ -41,6 +41,7 @@ class ArticleController extends Controller{
         $article->ab_createdate = date('Y-m-d H:i:s');
         $article->save();
 
+        //trigger the created event
         Articles::created($validatedData);
 
         if (array_key_exists('image', $validatedData)) {

@@ -40,9 +40,10 @@ function getGesamtWert(data){
 const gesamtWert = getGesamtWert(data);
 console.log('Gesamtwert= ' + gesamtWert);
 
-function getAnzahlProductOfCategory(data, categoryName = 1){
+function getAnzahlProductOfCategory(data, categoryName){
     let AnzahlProduct = 0;
     let categoryID = 0;
+    //not case sensitive search
     const categoryLower = categoryName.toLowerCase();
     data.kategorien.forEach(item => {
         if(item.name.toLowerCase() === categoryLower){
@@ -57,6 +58,6 @@ function getAnzahlProductOfCategory(data, categoryName = 1){
     return AnzahlProduct;
 }
 
-const category = 'Spielzeug';
+const category = 'garten';
 const AnzahlProductofCategory = getAnzahlProductOfCategory(data, category);
 console.log('Anzahl der Produkte von Category ' + category + '= '+ AnzahlProductofCategory);
