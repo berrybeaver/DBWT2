@@ -55,7 +55,7 @@ function AddNewArticle(){
     saveButton.setAttribute("class", "btn btn-primary");
     saveButton.textContent = 'Save';
     saveButton.onclick = function () {
-        form.submit();
+        submitFormViaAjax(form);
     }
 
     form.appendChild(nameLabel);
@@ -72,6 +72,44 @@ function AddNewArticle(){
     form.appendChild(csrf)
 
     document.body.appendChild(form);
+}
+
+// Function to submit form via AJAX
+function submitFormViaAjax(form) {
+    event.preventDefault(); // Prevent default form submission behavior
+    const formData = new FormData(form);
+
+    // Check if required fields are empty
+    const nameValue = formData.get('name');
+    const priceValue = formData.get('price');
+    const descriptionValue = formData.get('description');
+
+    if (!nameValue || !priceValue || !descriptionValue) {
+        window.alert('Bitte füllen Sie alle erforderlichen Felder aus.'); // Display error message
+        return; // Exit the function without submitting the form
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', form.action, true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            window.alert('Erfolgreich'); // Display success message
+            window.location.href = '/articles';
+        }else {
+            window.alert('Fehler: ' + xhr.responseText); // Display error message
+        }
+    };
+    xhr.onerror = function() {
+        displayMessage('Fehler: Die Anfrage konnte nicht verarbeitet werden.');
+    };
+    xhr.send(formData);
+}
+
+// Function to display message under the form
+function displayMessage(message) {
+    const messageElement = document.createElement('p');
+    messageElement.textContent = message;
+    document.body.appendChild(messageElement);
 }
 
 window.addEventListener('load', function (){

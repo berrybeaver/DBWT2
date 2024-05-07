@@ -21,12 +21,16 @@ class ArticleController extends Controller{
 
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
             'image' => 'image|mimes:jpeg,png,jpg', // 'image' ist der Name des Formularfeldes, das den Dateiupload enthält
             'name' => 'required',
             'price' => 'required|numeric|min:0',
             'description' => 'required',
         ]);
+        if (empty($validatedData['name']) || empty($validatedData['price']) || empty($validatedData['description'])) {
+            return redirect()->back()->withErrors(['message' => 'Bitte füllen Sie alle erforderlichen Felder aus.'])->withInput();
+        }
 
         //phpinfo($request->input('_token'));
 
