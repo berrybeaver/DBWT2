@@ -58,4 +58,57 @@ class ArticleController extends Controller{
         return redirect('/articles')->with('success', 'Artikel erfolgreich gespeichert!');
     }
 
+    public function create_api(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'price' => 'required|numeric|min:0.01', // Ensure price is greater than 0
+            'description' => 'required',
+        ]);
+
+        // Persistieren Sie die Daten in der Datenbank
+        $article = new Articles();
+        $idmax = DB::table('ab_article')->max('id');
+        $article->id = $idmax + 1;
+        $article->ab_name = $validatedData['name'];
+        $article->ab_price = $validatedData['price'];
+        $article->ab_description = $validatedData['description'];
+        $article->ab_creator_id = 1;
+        $article->ab_createdate = date('Y-m-d H:i:s');
+        $article->save();
+
+        if (array_key_exists('image', $validatedData)) {
+            $file = $validatedData['image'];
+            $filePath = public_path('/img');
+            $fileName = $article->getKey() . '.' . $file->getClientOriginalExtension();
+            $file->move($filePath, $fileName);
+        }
+
+        // Return the ID of the created article in the JSON response
+        return response()->json(['id' => $article->id]);
+    }
+
+    public function search_api(Request $request)
+    {
+        $search = $request->input('search');
+
+        $results = \App\Models\Articles::where('ab_name','ilike','%'.$search.'%')->get();
+
+        return response()->json($results);
+    }
+
+    public function delete_api($id)
+    {
+        // Find the article by ID
+        $article = Article::find($id);
+
+        // If the article is not found, return an error response
+        if (!$article) {
+            return response()->json(['message' => 'Article not found'], 404);
+        }
+
+        // Delete the article and return a success response
+        $article->delete();
+        return response()->json(['message' => 'Article deleted successfully']);
+    }
 }

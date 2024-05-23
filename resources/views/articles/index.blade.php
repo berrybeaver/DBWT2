@@ -15,7 +15,7 @@
 
     <div>
         <h1 style="font-weight: bolder;">Search</h1>
-        <form METHOD="get" action="{{ url('/articles') }}">
+        <form METHOD="get" action="{{ url('/api/articles') }}">
             <label for="search">Search: </label>
             <input type="text" id="search" name="search" value="{{ request('search') }}">
             <input type="submit" value="Search">

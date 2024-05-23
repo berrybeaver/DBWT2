@@ -2,7 +2,7 @@
 function AddNewArticle(){
     const form = document.createElement('form');
     form.method = 'POST';
-    form.action = '/articles'; // Endpoint for article submission
+    form.action = '/api/articles'; // Endpoint for article submission
     form.enctype = 'multipart/form-data';
 
     const nameLabel = document.createElement("label");
@@ -54,8 +54,8 @@ function AddNewArticle(){
     const saveButton = document.createElement('button');
     saveButton.setAttribute("class", "btn btn-primary");
     saveButton.textContent = 'Save';
-    saveButton.onclick = function () {
-        submitFormViaAjax(form);
+    saveButton.onclick = function (event) {
+        submitFormViaAjax(event, form);
     }
 
     form.appendChild(nameLabel);
@@ -75,28 +75,32 @@ function AddNewArticle(){
 }
 
 // Function to submit form via AJAX
-function submitFormViaAjax(form) {
+function submitFormViaAjax(event, form) {
     event.preventDefault(); // Prevent default form submission behavior
     const formData = new FormData(form);
-
     // Check if required fields are empty
     const nameValue = formData.get('name');
     const priceValue = formData.get('price');
     const descriptionValue = formData.get('description');
-
-    if (!nameValue || !priceValue || !descriptionValue) {
+    if (nameValue.trim() === '' || priceValue <= 0 || descriptionValue.trim()==='') {
         window.alert('Bitte füllen Sie alle erforderlichen Felder aus.'); // Display error message
         return; // Exit the function without submitting the form
-    }
+    };
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', form.action, true);
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (xhr.status === 200) {
-            window.alert('Erfolgreich'); // Display success message
-            window.location.href = '/articles';
-        }else {
-            window.alert('Fehler: ' + xhr.responseText); // Display error message
+            const response = JSON.parse(xhr.responseText); // Parse the JSON response
+            if (response.id) {
+                window.alert('Article created with ID: ' + response.id); // Display the ID of the created article
+                // Further actions can be performed based on the response
+            } else {
+                window.alert('Error: Unexpected response from the server'); // Display an error message for unexpected response
+            }
+        }
+        else {
+            window.alert('Error: ' + xhr.responseText); // Display error message from the server
         }
     };
     xhr.onerror = function() {
@@ -116,34 +120,4 @@ window.addEventListener('load', function (){
    AddNewArticle();
 });
 
-//     form.addEventListener('submit', function(event) {
-//         event.preventDefault(); // Prevent default form submission
-//
-//         // Validate the form data
-//         if (nameInput.value.trim() === '' || parseInt(priceInput.value) <= 0) {
-//             alert('Please enter valid article name and price');
-//             return;
-//         }
-//
-//         // Send the article data to the server
-//         const formData = new FormData(form);
-//         sendData(formData);
-//     });
-// });
-//
-// // Function to send article data to the server
-// function sendData(formData) {
-//     let xhr = new XMLHttpRequest();
-//     xhr.open('POST', '/articles');
-//     xhr.setRequestHeader('Content-Type', 'application/json');
-//     xhr.onreadystatechange = function() {
-//         if (xhr.readyState === 4) {
-//             if (xhr.status === 200) {
-//                 console.log(xhr.responseText);
-//             } else {
-//                 console.error(xhr.statusText);
-//             }
-//         }
-//     };
-//     xhr.send(formData);
-// }
+
