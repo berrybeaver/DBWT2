@@ -100,15 +100,14 @@ class ArticleController extends Controller{
     public function delete_api($id)
     {
         // Find the article by ID
-        $article = Article::find($id);
+        $article = Articles::find($id);
 
         // If the article is not found, return an error response
         if (!$article) {
             return response()->json(['message' => 'Article not found'], 404);
         }
-
         // Delete the article and return a success response
         $article->delete();
-        return response()->json(['message' => 'Article deleted successfully']);
+        return response()->json(['message' => 'Article deleted successfully'], 200);
     }
 }

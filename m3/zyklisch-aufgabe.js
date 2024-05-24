@@ -20,7 +20,7 @@ window.onload = function() {
     }
 
     // Zuerst die Nachricht abrufen
-    fetchMessage();
+    //fetchMessage();
 
     // Zyklisch alle 3 Sekunden die Nachricht aktualisieren
     setInterval(fetchMessage, 3000);

@@ -93,6 +93,7 @@ function submitFormViaAjax(event, form) {
         if (xhr.status === 200) {
             const response = JSON.parse(xhr.responseText); // Parse the JSON response
             if (response.id) {
+
                 window.alert('Article created with ID: ' + response.id); // Display the ID of the created article
                 // Further actions can be performed based on the response
             } else {
