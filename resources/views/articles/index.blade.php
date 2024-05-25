@@ -48,7 +48,7 @@
                 <td>{{ $article->ab_price / 100 }} €</td>
                 <td style="text-align: center;"> <img style="width: 30%;height:auto;" src="{{ asset($article->getImagePath($article->id)) }}" alt="{{ $article->ab_name }}"></td>
                 <td>{{ $article->ab_createdate }}</td>
-                <td style="text-align:center; background-color: black;" onclick="addProduct({{ json_encode($article, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) }})"><button style=text-align:center;">+</button></td>
+                <td style="text-align:center; background-color: black;" onclick=" updateCart({{ $article->id}})"><button style=text-align:center;">+</button></td>
             </tr>
         @endforeach
         </tbody>

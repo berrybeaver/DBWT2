@@ -3,8 +3,8 @@ let items;
 
 window.onload = function() {
     items = [];
-    showItems(items);
-
+    loadCart();
+    //showItems(items);
 }
 
 function addProduct(article){
@@ -14,7 +14,6 @@ function addProduct(article){
         console.log(items);
         showItems(items);
     }
-
 }
 
 function removeProduct(article){
@@ -65,9 +64,10 @@ function showItems() {
 
         let cell2 = document.createElement('td');
         let removeButton = document.createElement('button');
-        removeButton.textContent = '-';
+        removeButton.textContent = 'remove';
 
         cell2.onclick = function() {
+            removeItem(1, items[i].id);
             removeProduct(items[i]);
             showItems();
         }
@@ -108,7 +108,10 @@ function showItems() {
     let RemoveAllButton = document.createElement('button');
     RemoveAllButton.textContent = 'Remove All';
     RemoveAllButton.onclick = function() {
-        items = [];
+        items.forEach(function (item){
+            removeItem(1, item.id);
+            removeProduct(item);
+        });
         showItems();
     }
 
@@ -121,4 +124,63 @@ function showItems() {
     table.appendChild(footer);
 
 
+}
+
+function updateCart( id ) {
+
+    if(!items.some(item => item.id === id)) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/api/shoppingcart", true);
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+        console.log(id);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({article_id: id}));
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                let response = JSON.parse(xhr.responseText);
+                console.log(response);
+                addProduct(response);
+                loadCart();
+            }
+        }
+    }
+}
+
+
+function removeItem(shoppingCartId, articleId){
+    var xhr = new XMLHttpRequest();
+    xhr.open("DELETE", "/api/shoppingcart/" + shoppingCartId + "/articles/" + articleId, true);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({article_id: articleId, shoppingcartid: shoppingCartId}));
+
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            // let response = JSON.parse(xhr.responseText);
+            console.log(xhr.responseText);
+            items = items.filter(item => item !== xhr.responseText);
+            showItems();
+
+        }
+    }
+}
+
+function loadCart(){
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", "/api/shoppingcart", true);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+    xhr.send();
+
+    xhr.onload = function () {
+        if (xhr.status == 200) {
+            let response = JSON.parse(xhr.responseText);
+            console.log(response);
+            items = response;
+            showItems();
+        }
+    }
 }

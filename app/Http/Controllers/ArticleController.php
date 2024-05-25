@@ -85,7 +85,7 @@ class ArticleController extends Controller{
         }
 
         // Return the ID of the created article in the JSON response
-        return response()->json(['id' => $article->id]);
+        return response()->json(['id' => $article->id], 201);
     }
 
     public function search_api(Request $request)
