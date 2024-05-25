@@ -40,7 +40,7 @@ function getGesamtWert(data){
 const gesamtWert = getGesamtWert(data);
 console.log('Gesamtwert= ' + gesamtWert);
 
-function getAnzahlProductOfCategory(data, categoryName = 1){
+function getAnzahlProductOfCategory(data, categoryName){
     let AnzahlProduct = 0;
     let categoryID = 0;
     const categoryLower = categoryName.toLowerCase();
