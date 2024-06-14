@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class ShoppingcartController extends Controller
 {
-    function init(Request $request)
+    function init_cart(Request $request)
     {
         // Get the shopping cart from the database
         $shoppingCart = Shoppingcart::where('ab_creator_id', 1)->first();
@@ -17,7 +17,7 @@ class ShoppingcartController extends Controller
         // If the shopping cart does not exist, create a new one
         if (!$shoppingCart) {
             $shoppingCart = Shoppingcart::create([
-                'ab_creator_id' => $request->session()->get('id'),
+                'ab_creator_id' => 1, //$request->session()->get('id'),
                 'ab_createdate' => date('Y-m-d H:i:s')
             ]);
         }

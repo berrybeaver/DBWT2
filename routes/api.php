@@ -18,5 +18,5 @@ Route::post('/articles', [ArticleController::class, 'create_api']);
 
 //add item to shopping cart
 Route::post('/shoppingcart', [ShoppingcartController::class, 'store']);
-Route::get('/shoppingcart', [ShoppingcartController::class, 'init']);
+Route::get('/shoppingcart', [ShoppingcartController::class, 'init_cart']);
 Route::delete('/shoppingcart/{shoppingcartid}/articles/{articleId}', [ShoppingCartController::class, 'removeItem']);

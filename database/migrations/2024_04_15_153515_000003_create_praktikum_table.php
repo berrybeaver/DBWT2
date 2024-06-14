@@ -19,9 +19,9 @@ return new class extends Migration
         });
         Schema::create('ab_article', function (Blueprint $table) {
             $table->BigIncrements('id')->unsigned()->primary();
-            $table->string('ab_name', 80)->nullable(false);
-            $table->integer('ab_price')->nullable(false);
-            $table->string('ab_description', 1000)->nullable(false);
+            $table->string('ab_name', 80);
+            $table->integer('ab_price');
+            $table->string('ab_description', 1000);
             $table->BigInteger('ab_creator_id')->unsigned()->nullable(false);
             $table->foreign('ab_creator_id')->references('id')->on('ab_users');
             $table->timestamp('ab_createdate')->nullable(false);
@@ -35,9 +35,9 @@ return new class extends Migration
                 ->on('ab_articlecategory')->onDelete('cascade');
         });
         Schema::create('ab_article_has_articlecategory', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary();
-            $table->unsignedBigInteger('ab_articlecategory_id')->nullable(false);
-            $table->unsignedBigInteger('ab_article_id')->nullable(false);
+            $table->id();
+            $table->unsignedBigInteger('ab_articlecategory_id');
+            $table->unsignedBigInteger('ab_article_id');
             $table->unique(['ab_articlecategory_id', 'ab_article_id']);
             $table->foreign('ab_articlecategory_id')->references('id')->on('ab_articlecategory');
             $table->foreign('ab_article_id')->references('id')->on('ab_article');

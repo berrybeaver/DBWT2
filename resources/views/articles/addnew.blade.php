@@ -6,7 +6,7 @@
     <div class="article-content">
         <!-- Content specific to the article page -->
     </div>
-    <script src="{{ asset('js/addnewarticle.js') }}"></script>
+    @vite('resources/js/addnewarticle.js')
 @endsection
 
 

@@ -85,16 +85,33 @@ class ArticleController extends Controller{
         }
 
         // Return the ID of the created article in the JSON response
-        return response()->json(['id' => $article->id], 201);
+        return response()->json(['id' => $article->id]);
     }
 
     public function search_api(Request $request)
     {
+
         $search = $request->input('search');
 
         $results = \App\Models\Articles::where('ab_name','ilike','%'.$search.'%')->get();
+        foreach ($results as $result) {
+            $result->image_url = asset($this->getImagePath($result->id));
+        }
 
-        return response()->json($results);
+        return response()->json($results, 200);
+    }
+    public function getImagePath($id)
+    {
+        $jpgImagePath = "/img/{$id}.jpg";
+        $pngImagePath = "/img/{$id}.png";
+
+        if (file_exists(public_path($jpgImagePath))) {
+            return $jpgImagePath;
+        } elseif (file_exists(public_path($pngImagePath))) {
+            return $pngImagePath;
+        }
+
+        return "/img/default.png";
     }
 
     public function delete_api($id)
@@ -110,4 +127,6 @@ class ArticleController extends Controller{
         $article->delete();
         return response()->json(['message' => 'Article deleted successfully'], 200);
     }
+
+
 }

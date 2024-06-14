@@ -6,5 +6,5 @@
     <div id="menuContainer">
 
     </div>
-    <script src="js/home.js"></script>
+    @vite('resources/js/home.js')
 @endsection
