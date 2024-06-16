@@ -3,10 +3,12 @@
 @section('title', 'Add NewArticle Page')
 
 @section('content')
-    <div class="article-content">
+    @vite('resources/js/newArticle.vue')
+    <div id="app">
         <!-- Content specific to the article page -->
+        <newarticle></newarticle>
     </div>
-    @vite('resources/js/addnewarticle.js')
+
 @endsection
 
 

@@ -32,7 +32,7 @@ export default{
         }
     },
     mounted() {
-        this.searchArticles();
+        this.searchArticles(); //?
     }
 }
 
@@ -57,7 +57,7 @@ export default{
             <th>{{ article.ab_name }}</th>
             <td>{{ article.ab_description }}</td>
             <td>{{ (article.ab_price / 100).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }) }} </td>
-            <td class="border px-2 py-1"><img :src="article.image_url" :alt="article.ab_name" class="w-6" style="width: 100px;"></td>
+            <td ><img :src="article.image_url" :alt="article.ab_name" style="width: 100px;"></td>
             <td>{{ article.ab_createdate }}</td>
             <td style="text-align:center; background-color: black;" @click=" updateArticle(article.id)"><button>+</button></td>
         </tr>

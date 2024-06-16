@@ -62,7 +62,7 @@ class ArticleController extends Controller{
     {
         $validatedData = $request->validate([
             'name' => 'required',
-            'price' => 'required|numeric|min:0.01', // Ensure price is greater than 0
+            'price' => 'required|numeric|min:1', // Ensure price is greater than 0
             'description' => 'required',
         ]);
 
@@ -78,9 +78,9 @@ class ArticleController extends Controller{
         $article->save();
 
         if (array_key_exists('image', $validatedData)) {
-            $file = $validatedData['image'];
+            $file = $request['image'];
             $filePath = public_path('/img');
-            $fileName = $article->getKey() . '.' . $file->getClientOriginalExtension();
+            $fileName = $article->id . '.' . $file->getClientOriginalExtension();
             $file->move($filePath, $fileName);
         }
 

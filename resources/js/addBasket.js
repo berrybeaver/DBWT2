@@ -1,4 +1,5 @@
 let items;
+import {add} from 'mathjs';
 
 
 window.onload = function() {
@@ -60,7 +61,7 @@ function showItems() {
         let pr = items[i].ab_price/100
         cell3.textContent = pr.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
         cell3.classList.add('text-black');
-        sum += pr;
+        sum= add(sum, pr); //aufgabe 3 m4
 
         let cell2 = document.createElement('td');
         let removeButton = document.createElement('button');
@@ -73,6 +74,7 @@ function showItems() {
         }
 
         cell2.style = 'background-color: darkred;';
+        cell2.style.textAlign = 'center';
         cell2.classList.add('text-white');
 
 
@@ -104,6 +106,7 @@ function showItems() {
 
     let foot3 = document.createElement('td');
     foot3.style = 'background-color: darkred;';
+    foot3.style.textAlign = 'center';
 
     let RemoveAllButton = document.createElement('button');
     RemoveAllButton.textContent = 'Remove All';
