@@ -32,7 +32,7 @@ export default{
         }
     },
     mounted() {
-        this.searchArticles(); //?
+        this.searchArticles();
     }
 }
 
@@ -53,7 +53,7 @@ export default{
         </tr>
         </thead>
         <tbody>
-        <tr v-for="(article, index) in articles" :key = "index" id="items" >
+        <tr v-for="(article, index) in articles" :key = "index" id="items" > <!-- article.id statt index-->
             <th>{{ article.ab_name }}</th>
             <td>{{ article.ab_description }}</td>
             <td>{{ (article.ab_price / 100).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }) }} </td>

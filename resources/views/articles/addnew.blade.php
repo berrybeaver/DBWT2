@@ -2,13 +2,25 @@
 
 @section('title', 'Add NewArticle Page')
 
+@section('header')
+    <div id="header">
+        <siteheader></siteheader>
+        <navbar></navbar>
+    </div>
+@endsection
+
 @section('content')
-    @vite('resources/js/newArticle.vue')
     <div id="app">
         <!-- Content specific to the article page -->
         <newarticle></newarticle>
     </div>
 
+@endsection
+
+@section('footer')
+    <div id="footer">
+        <sitefooter @toggle-impressum="toggleImpressum"></sitefooter>
+    </div>
 @endsection
 
 

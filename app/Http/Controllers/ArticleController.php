@@ -90,10 +90,11 @@ class ArticleController extends Controller{
 
     public function search_api(Request $request)
     {
-
+        $page = $request->get('page',1);
+        $perpage = $request->get('perpage', 5);
         $search = $request->input('search');
 
-        $results = \App\Models\Articles::where('ab_name','ilike','%'.$search.'%')->get();
+        $results = Articles::where('ab_name','ilike','%'.$search.'%')->paginate($perpage);
         foreach ($results as $result) {
             $result->image_url = asset($this->getImagePath($result->id));
         }
@@ -114,18 +115,29 @@ class ArticleController extends Controller{
         return "/img/default.png";
     }
 
-    public function delete_api($id)
-    {
-        // Find the article by ID
+    public function soldArticle_api($id){
         $article = Articles::find($id);
+        $articleName = $article->ab_name;
+        $articleCreatorId = $article->ab_creator_id;
+        \Ratchet\Client\connect("ws://localhost:8085/verkaufsmeldung")->then(function($conn) use ($articleName, $articleCreatorId){
+            $data = [
+                'articleCreatorId' => $articleCreatorId,
+                'message' => "Grossartig! Ihr Artikel: $articleName wurde erfolgreich verkauft!",
+            ];
+            $jsonString = json_encode($data);
 
-        // If the article is not found, return an error response
-        if (!$article) {
-            return response()->json(['message' => 'Article not found'], 404);
-        }
-        // Delete the article and return a success response
-        $article->delete();
-        return response()->json(['message' => 'Article deleted successfully'], 200);
+            $conn->on('message', function($msg) use ($conn) {
+                echo "Received: {$msg}\n";
+                $conn->close();
+            });
+
+            $conn->send($jsonString);
+
+            $conn->close();
+        }, function ($e) {
+            echo "Could not connect: {$e->getMessage()}\n";
+        });
+
     }
 
 

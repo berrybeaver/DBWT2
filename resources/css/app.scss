@@ -1,0 +1,16 @@
+.vue-scroll-up {
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.658);
+    border: rgba(0, 0, 0, 0.658);
+    border-radius: 100px;
+    bottom: 100px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    height: 55px;
+    justify-content: center;
+    position: fixed;
+    right: 10px;
+    width: 55px;
+    z-index: 99;
+}
