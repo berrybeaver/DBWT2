@@ -20,11 +20,16 @@ export default{
     ,methods: {
         connectEcho(){
             window.Pusher.logToConsole = true;
-            window.Echo.channel(`wartungs-channel`).
-                listen('.wartungsevent', (e) => {
-                    console.log(e.message);
+            window.Echo.channel('wartung')
+                .listen('.wartungsevent', (e) => {
+                    alert(e.message);
             })
 
+            let userId = 1;
+            window.Echo.channel('verkaufsMeldung')
+                .listen('.verkaufs-Meldung', (e) => {
+                    alert(e.message);
+                })
         },
         changePage(newPage) {
 
@@ -109,6 +114,7 @@ export default{
     mounted() {
         this.searchArticles();
         this.loadCart();
+        this.connectEcho();
     },
     computed:{
         totalPrice() {
@@ -165,6 +171,7 @@ export default{
             <th >Images</th>
             <th >created at</th>
             <th >Add to Basket</th>
+            <th >Mark as sold</th>
         </tr>
         </thead>
         <tbody>
@@ -175,7 +182,8 @@ export default{
             <td>{{ (article.ab_price / 100).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }) }} </td>
             <td ><img :src="article.image_url" :alt="article.ab_name" style="width: 100px;"></td>
             <td>{{ article.ab_createdate }}</td>
-            <td style="text-align:center; background-color: black;" @click=" addProduct(article.id)"><button>+</button></td>
+            <td style="text-align:center;" @click=" addProduct(article)"><button>+</button></td>
+            <td style="text-align: center; "><button>Sold</button></td>
         </tr>
         </tbody>
     </table>

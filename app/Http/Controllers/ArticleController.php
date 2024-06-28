@@ -118,25 +118,8 @@ class ArticleController extends Controller{
     public function soldArticle_api($id){
         $article = Articles::find($id);
         $articleName = $article->ab_name;
-        $articleCreatorId = $article->ab_creator_id;
-        \Ratchet\Client\connect("ws://localhost:8085/verkaufsmeldung")->then(function($conn) use ($articleName, $articleCreatorId){
-            $data = [
-                'articleCreatorId' => $articleCreatorId,
-                'message' => "Grossartig! Ihr Artikel: $articleName wurde erfolgreich verkauft!",
-            ];
-            $jsonString = json_encode($data);
+        $articleCreatorId = 1;
 
-            $conn->on('message', function($msg) use ($conn) {
-                echo "Received: {$msg}\n";
-                $conn->close();
-            });
-
-            $conn->send($jsonString);
-
-            $conn->close();
-        }, function ($e) {
-            echo "Could not connect: {$e->getMessage()}\n";
-        });
 
     }
 

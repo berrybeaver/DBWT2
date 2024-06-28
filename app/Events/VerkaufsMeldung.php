@@ -6,24 +6,26 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class Wartungsevent implements ShouldBroadcastNow
+class VerkaufsMeldung implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public string $message;
 
+    public int $userId = 1;
+    public string $message;
+    public string $article;
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(string $message, string $article, int $userId = 1)
     {
-        $this->message= 'In Kürze verbessern wir Abalo für Sie!
-Nach einer kurzen Pause sind wir wieder
-für Sie da! Versprochen.';
-        //
+        $this->message = $message;
+        $this->article = $article;
+        $this->userId = $userId;
+
     }
 
     /**
@@ -31,12 +33,18 @@ für Sie da! Versprochen.';
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn(): Channel
+    public function broadcastOn(): array
     {
-        return new Channel('wartung');
+        return [
+            new PrivateChannel('verkaufsMeldung')
+        ];
     }
-
     public function broadcastAs(): string{
-        return 'wartungsevent';
+        return 'verkaufs-Meldung';
+    }
+    public function broadcastWith(): array{
+        return [
+            
+        ];
     }
 }

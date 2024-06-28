@@ -31,6 +31,8 @@ Route::get('/newsite', function(){
     return view('newsite');
 });
 
-Route::get('/newsite/maintenance', function (){
+Route::get('maintenance', function (){
     event(new Wartungsevent());
 });
+
+\Illuminate\Support\Facades\Broadcast::routes();

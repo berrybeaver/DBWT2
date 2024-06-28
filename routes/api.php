@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ShoppingcartController;
@@ -27,3 +28,5 @@ Route::get('/page',[PaginationApi::class,'Pagination_Api']);
 Route::get('/pageCount',[PaginationApi::class,'getPageCount_api']);
 
 Route::post('/articles/{id}/sold',[ArticleController::class,'soldArticle_api']);
+
+Broadcast::routes();

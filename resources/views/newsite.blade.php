@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('title', 'Welcome to Abalo')
-
+@vite('resources/js/echo.js')
 
 @section('header')
     <div id="header">
