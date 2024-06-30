@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Angebotsevent;
+use App\Events\VerkaufsMeldung;
 use Illuminate\Http\Request;
 use App\Models\Articles;
 use Illuminate\Support\Facades\DB;
@@ -117,10 +119,24 @@ class ArticleController extends Controller{
 
     public function soldArticle_api($id){
         $article = Articles::find($id);
-        $articleName = $article->ab_name;
-        $articleCreatorId = 1;
+        $CreatorId = $article->ab_creator_id;
 
+        \Illuminate\Support\Facades\Log::info("ArticleController:markAsSold: Article found: " . $article->ab_name);
 
+        if ($article && $article->ab_name) {
+            event(new VerkaufsMeldung("Großartig! Ihr Artikel {$article->ab_name} wurde erfolgreich verkauft!", $CreatorId, $article->ab_name));
+            return response()->json(['message' => 'Article marked as sold and event dispatched.']);
+        }
+        return response()->json(['message' => 'Article not found.'], 404);
+    }
+
+    public function offer_api(Request $request, $articleId, $receiver)
+    {
+        $article = Articles::find($articleId);
+        \Illuminate\Support\Facades\Log::info("ArticleController:setOffer: Article found: " . $article->ab_name ." receiver: ". $receiver);
+        event(new Angebotsevent("{$article->ab_name} ist noch verfuegbar! jetzt kaufen!!!", $article, $receiver));
+
+        return response()->json(['message' => 'Article offer processed.']);
     }
 
 

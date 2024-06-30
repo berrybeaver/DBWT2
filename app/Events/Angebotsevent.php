@@ -10,22 +10,20 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class VerkaufsMeldung implements ShouldBroadcast
+class Angebotsevent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public string $userId;
     public string $message;
-    public string $article;
+    public string $article; //name des artikels
+    public int $userId;
     /**
      * Create a new event instance.
      */
-    public function __construct(string $message,  string $userId, string $article)
+    public function __construct(string $message, string $article, int $userId)
     {
         $this->message = $message;
         $this->article = $article;
         $this->userId = $userId;
-
     }
 
     /**
@@ -35,15 +33,17 @@ class VerkaufsMeldung implements ShouldBroadcast
      */
     public function broadcastOn(): Channel
     {
-        return new Channel('verkaufsMeldung.' . $this->userId);
+        return new Channel('OffersEvent');
     }
-    public function broadcastAs(): string{
-        return 'verkaufs-Meldung';
+
+    public function broadcastAs()
+    {
+        return 'Offers-Event';
     }
+
     public function broadcastWith(): array{
         return [
             'message' => $this->message,
-            'userId' => $this->userId,
             'articleName' => $this->article
         ];
     }

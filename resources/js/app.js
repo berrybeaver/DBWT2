@@ -21,25 +21,10 @@ createApp({
         newarticle,
         pagination,
         VueScrollUp,
-    }
-}).mount('#app');
-
-createApp({
-    components: {
         siteheader,
-        navbar,
-    }
-}).mount('#header')
-
-createApp({
-    components: {
         sitebody,
-    }
-}).mount('#body')
-
-createApp({
-    components: {
-        sitefooter
+        sitefooter,
+        navbar,
     },
     data(){
         return{
@@ -51,4 +36,6 @@ createApp({
             this.showImpressum = !this.showImpressum;
         }
     }
-}).mount('#footer')
+}).mount('#app');
+
+

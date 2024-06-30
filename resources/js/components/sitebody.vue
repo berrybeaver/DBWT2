@@ -5,16 +5,18 @@ import Pagination from "@/components/Pagination.vue";
 import impressum from "@/components/impressum.vue";
 
 export default{
-    components: {Pagination},
+    props: ['show-impressum'],
+    components: {Pagination, impressum},
     data() {
         return {
             search: '',
-            //searchedarticles: [],
             articles: [],
             page: 1,
             totalpages: 0,
             perpage: 5,
             items:[],
+            userId: '1',
+            currentUserId: 5,
         };
     }
     ,methods: {
@@ -23,13 +25,25 @@ export default{
             window.Echo.channel('wartung')
                 .listen('.wartungsevent', (e) => {
                     alert(e.message);
-            })
+                });
 
-            let userId = 1;
-            window.Echo.channel('verkaufsMeldung')
+            let userId = 5; //change according to article
+            window.Echo.channel(`verkaufsMeldung.${userId}`)
                 .listen('.verkaufs-Meldung', (e) => {
+                    console.log('Article sold event received');
                     alert(e.message);
                 })
+                .error((error) => {
+                    console.log('Subscription Error: ', error);
+                });
+            window.Echo.channel(`OffersEvent`)
+                .listen('.Offers-Event', (e) => {
+                    console.log('Offers event received');
+                    alert(e.message);
+                })
+                .error((error) => {
+                    console.log('offer event Error: ', error);
+                });
         },
         changePage(newPage) {
 
@@ -39,6 +53,25 @@ export default{
         changeItemsPerPage(newItemsPerPage) {
             this.perpage = newItemsPerPage;
             this.searchArticles();
+        },
+        markAsSold(articleId) {
+
+            axios.post(`/api/articles/${articleId}/sold`)
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        },
+        setOffer(articleId){
+            axios.post(`/api/articles/${articleId}/offer/1`) // Replace '1' with the actual user ID
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         },
         async searchArticles() {
 
@@ -109,7 +142,6 @@ export default{
                 })
                 .catch(error => console.error('Error removing item:', error));
         },
-
     },
     mounted() {
         this.searchArticles();
@@ -126,11 +158,10 @@ export default{
 </script>
 
 <template>
-    <div class="footer">
-        <impressum v-if="impressumVisible" />
-    </div>
-    <h2 style="font-weight: bolder;"> My Basket</h2>
+    <impressum v-if="showImpressum"></impressum>
+    <div v-else>
     <div>
+        <h2 style="font-weight: bolder;"> My Basket</h2>
         <table style="width: 100%;" ref="basketTable">
             <thead>
             <tr>
@@ -172,6 +203,7 @@ export default{
             <th >created at</th>
             <th >Add to Basket</th>
             <th >Mark as sold</th>
+            <th >Offer</th>
         </tr>
         </thead>
         <tbody>
@@ -182,8 +214,11 @@ export default{
             <td>{{ (article.ab_price / 100).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }) }} </td>
             <td ><img :src="article.image_url" :alt="article.ab_name" style="width: 100px;"></td>
             <td>{{ article.ab_createdate }}</td>
-            <td style="text-align:center;" @click=" addProduct(article)"><button>+</button></td>
-            <td style="text-align: center; "><button>Sold</button></td>
+            <td style="text-align:center;" ><button @click=" addProduct(article)">+</button></td>
+            <td style="text-align: center; " ><button @click=" markAsSold(article.id)">Sold</button></td>
+            <td >
+                <button v-if="article.ab_creator_id === currentUserId " @click="setOffer(article.id)">X</button>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -196,6 +231,7 @@ export default{
                 </tr>
             </tbody>
         </table>
+    </div>
     </div>
 </template>
 

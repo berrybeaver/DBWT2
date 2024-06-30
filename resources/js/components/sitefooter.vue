@@ -1,15 +1,9 @@
 <script>
-    import impressum from "./impressum.vue";
     export default {
-        components: {impressum},
-        data(){
-            return{
-                impressumVisible: false,
-            };
-        },
+        emits: ['toggle-impressum'],
         methods: {
             showImpressum() {
-                this.impressumVisible = !this.impressumVisible;
+                this.$emit('toggle-impressum');
             }
         },
     }
@@ -18,7 +12,6 @@
 <template>
     <div class="footer">
         <a @click="showImpressum">Impressum</a>
-        <impressum v-if="impressumVisible" />
     </div>
 </template>
 

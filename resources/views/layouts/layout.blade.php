@@ -11,19 +11,6 @@
        @vite(['resources/css/app.scss'])
    </head>
    <body>
-
-            <!-- Common header, navigation, or other components -->
-            <header>
-                @yield('header')
-            </header>
-
-           <main>
-                @yield('content')
-           </main>
-           <!-- Common footer, scripts, or other components -->
-            <footer>
-                @yield('footer')
-            </footer>
-
+        @yield('content')
    </body>
    </html>
