@@ -19,11 +19,10 @@ class Angebotsevent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(string $message, string $article, int $userId)
+    public function __construct(string $message, string $article)
     {
         $this->message = $message;
         $this->article = $article;
-        $this->userId = $userId;
     }
 
     /**

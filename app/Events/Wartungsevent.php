@@ -21,9 +21,8 @@ class Wartungsevent implements ShouldBroadcastNow
     public function __construct()
     {
         $this->message= 'In Kürze verbessern wir Abalo für Sie!
-Nach einer kurzen Pause sind wir wieder
-für Sie da! Versprochen.';
-        //
+            Nach einer kurzen Pause sind wir wieder
+            für Sie da! Versprochen.';
     }
 
     /**

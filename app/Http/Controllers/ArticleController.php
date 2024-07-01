@@ -130,11 +130,11 @@ class ArticleController extends Controller{
         return response()->json(['message' => 'Article not found.'], 404);
     }
 
-    public function offer_api(Request $request, $articleId, $receiver)
+    public function offer_api(Request $request, $articleId)
     {
         $article = Articles::find($articleId);
-        \Illuminate\Support\Facades\Log::info("ArticleController:setOffer: Article found: " . $article->ab_name ." receiver: ". $receiver);
-        event(new Angebotsevent("{$article->ab_name} ist noch verfuegbar! jetzt kaufen!!!", $article, $receiver));
+        \Illuminate\Support\Facades\Log::info("ArticleController:setOffer: Article found: " . $article->ab_name  );
+        event(new Angebotsevent("{$article->ab_name} ist noch verfuegbar! jetzt kaufen!!!", $article));
 
         return response()->json(['message' => 'Article offer processed.']);
     }

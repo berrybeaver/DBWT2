@@ -1,0 +1,33 @@
+// Variables
+$input-border-color: #606C5D;
+$input-focus-color: #606C5D;
+$input-padding: 10px;
+$input-font-size: 16px;
+$input-border-radius: 4px;
+
+// Mixins
+@mixin input-style {
+    border: 1px solid $input-border-color;
+    padding: $input-padding;
+    font-size: $input-font-size;
+    border-radius: $input-border-radius;
+
+    &:focus {
+        border-color: $input-focus-color;
+        outline: none;
+    }
+}
+
+// Inheritance
+%input-base {
+    width: 25%;
+    box-sizing: border-box;
+}
+
+// Styling using Sass features
+.search {
+    &__input {
+        @extend %input-base;
+        @include input-style;
+    }
+}

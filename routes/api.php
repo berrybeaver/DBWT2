@@ -28,6 +28,6 @@ Route::get('/page',[PaginationApi::class,'Pagination_Api']);
 Route::get('/pageCount',[PaginationApi::class,'getPageCount_api']);
 
 Route::post('/articles/{id}/sold',[ArticleController::class,'soldArticle_api']);
-Route::post('/articles/{id}/offer/{receiver}',[ArticleController::class,'offer_api']);
+Route::post('/articles/{id}/offer',[ArticleController::class,'offer_api']);
 
 Broadcast::routes();

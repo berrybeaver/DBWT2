@@ -64,29 +64,121 @@
 </script>
 
 <template>
-    <h1>{{ title }}</h1>
-    <form @submit.prevent="submitForm"> <!-- prevent default form submission-->
-        <div>
-            <label for="name">Name</label>
-            <input type="text" id="name" v-model="article.name" placeholder="Name" />
+    <h1 style="text-align: center;">{{ title }}</h1>
+    <form class="form" @submit.prevent="submitForm">
+        <div class="form__group">
+            <label for="name" class="form__label">Name</label>
+            <input type="text" id="name" class="form__input" v-model="article.name" placeholder="Name" />
         </div>
-        <div>
-            <label for="price">Price</label>
-            <input type="number" id="price" v-model="article.price" placeholder="Price" />
+        <div class="form__group">
+            <label for="price" class="form__label">Price</label>
+            <input type="number" id="price" class="form__input" v-model="article.price" placeholder="Price" />
         </div>
-        <div>
-            <label for="description">Description</label>
-            <textarea id="description" v-model="article.description" placeholder="Description" />
+        <div class="form__group">
+            <label for="description" class="form__label">Description</label>
+            <textarea id="description" class="form__textarea" v-model="article.description" placeholder="Description"></textarea>
         </div>
-        <div>
-            <label for="images">Images</label>
-            <input type="file" id="image" ref="image" accept="image/*" @change="handleFileUpload">
+        <div class="form__group">
+            <label for="images" class="form__label">Images</label>
+            <input type="file" id="image" class="form__file-input" ref="image" accept="image/*" @change="handleFileUpload">
         </div>
-        <button type="submit" :disabled="isLoading">Submit</button>
+        <button type="submit" class="form__button" :disabled="isLoading">Submit</button>
     </form>
+
 
 </template>
 
-<style>
+<style scoped lang="scss">
+// Variables
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+$error-color: #e74c3c;
+$input-border-color: #ccc;
+$input-focus-border-color: $primary-color;
+$button-bg-color: $primary-color;
+$button-hover-bg-color: darken($primary-color, 10%);
+$button-disabled-bg-color: lighten($primary-color, 30%);
+$font-stack: 'Helvetica, Arial, sans-serif';
+$border-radius: 4px;
+$form-bg-color: #f9f9f9;
+
+// Mixins
+@mixin transition($property, $duration) {
+    transition: $property $duration ease-in-out;
+}
+
+@mixin input-style {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid $input-border-color;
+    border-radius: $border-radius;
+    font-family: $font-stack;
+    @include transition(border-color, 0.3s);
+
+    &:focus {
+        border-color: $input-focus-border-color;
+        outline: none;
+    }
+}
+
+// Functions
+@function px-to-rem($px) {
+    @return $px / 16 * 1rem;
+}
+
+// Inheritance
+%hidden {
+    display: none;
+}
+
+// Styling using Sass features
+.form {
+    background-color: $form-bg-color;
+    padding: 20px;
+    border-radius: $border-radius;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+
+    &__group {
+        margin-bottom: 15px;
+    }
+
+    &__label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    &__input,
+    &__textarea,
+    &__file-input {
+        @include input-style;
+    }
+
+    &__textarea {
+        resize: vertical;
+    }
+
+    &__button {
+        background-color: $button-bg-color;
+        color: #fff;
+        border: none;
+        border-radius: $border-radius;
+        padding: 10px 20px;
+        font-family: $font-stack;
+        cursor: pointer;
+        @include transition(background-color, 0.3s);
+
+        &:hover:not(:disabled) {
+            background-color: $button-hover-bg-color;
+        }
+
+        &:disabled {
+            background-color: $button-disabled-bg-color;
+            cursor: not-allowed;
+        }
+    }
+}
 
 </style>

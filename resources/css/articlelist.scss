@@ -1,0 +1,97 @@
+// Variables
+$table-border-color: #ddd;
+$header-bg-color: #f4f4f4;
+$table-bg-color: #606C5D; // Greenish background color
+$button-bg-color: darkred;
+$button-hover-bg-color: lighten(darkred, 10%);
+$font-stack: Arial, sans-serif;
+$border-radius: 4px;
+
+// Mixins
+@mixin button-style($bg-color, $hover-color) {
+    background-color: $bg-color;
+    color: #fff;
+    border: none;
+    border-radius: $border-radius;
+    padding: 5px 10px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $hover-color;
+    }
+}
+
+// Functions
+@function px-to-rem($px) {
+    @return $px / 16 * 1rem;
+}
+
+// Inheritance
+%center-text {
+    text-align: center;
+}
+
+// Styling using Sass features
+.list-table {
+    &__table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: $font-stack;
+        background-color: $table-bg-color;
+        color: white;
+
+        &-head {
+            background-color: $header-bg-color;
+        }
+
+        &-row {
+            &:nth-child(even) {
+                background-color: lighten($table-bg-color, 10%);
+            }
+        }
+
+        &-header,
+        &-cell {
+            padding: 10px;
+            border: 1px solid $table-border-color;
+            text-align: center;
+
+            &--id,
+            &--name,
+            &--description,
+            &--price,
+            &--image,
+            &--createdate,
+            &--add,
+            &--sold,
+            &--offer {
+                // Additional styles for specific cells if needed
+            }
+        }
+
+        &-cell {
+            &--id, &--name, &--description, &--price, &--image, &--createdate {
+
+                // Specific styles
+            }
+
+            &--add,
+            &--sold,
+            &--offer {
+                @extend %center-text;
+            }
+        }
+
+        &-image {
+            width: 25%; // Limit image size to 100px
+        }
+
+        &-button {
+            &--add,
+            &--sold,
+            &--offer {
+                @include button-style($button-bg-color, $button-hover-bg-color);
+            }
+        }
+    }
+}
